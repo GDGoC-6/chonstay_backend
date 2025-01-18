@@ -50,4 +50,10 @@ public class UserController {
     public String getUserNameById(Long userId) {
         return userService.getUserNameById(userId);
     }
+
+    // 회원탈퇴
+    @DeleteMapping
+    public void DeleteUser(Long userId) {
+        userService.deleteUserById(userId);
+    }
 }

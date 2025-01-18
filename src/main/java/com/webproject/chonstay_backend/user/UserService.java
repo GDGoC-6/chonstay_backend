@@ -61,4 +61,13 @@ public class UserService {
             throw new RuntimeException("비밀번호 암호화 중 문제가 발생했습니다.", e);
         }
     }
+
+    // 회원 탈퇴 메서드
+    public void deleteUserById(Long userId) {
+        // 사용자가 존재하는지 확인 후 삭제
+        userRepository.findById(userId).ifPresentOrElse(
+                userRepository::delete,
+                () -> { throw new EntityNotFoundException("User with ID " + userId + " not found"); }
+        );
+    }
 }
