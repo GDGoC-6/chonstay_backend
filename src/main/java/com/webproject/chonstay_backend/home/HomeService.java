@@ -68,8 +68,13 @@ public class HomeService {
         List<Home> homes;
 
         if (searchQuery != null && location != null) {
-            homes = homeRepository.findByHomeNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrAddressContainingIgnoreCaseAndLocationAndHomeStatusTrue(
-                    searchQuery, searchQuery, searchQuery, location);
+            Set<Home> homeSet = new HashSet<>();
+            homeSet.addAll(homeRepository.findByHomeNameContainingIgnoreCaseAndHomeStatusTrue(searchQuery));
+            homeSet.addAll(homeRepository.findByDescriptionContainingIgnoreCaseAndHomeStatusTrue(searchQuery));
+            homeSet.addAll(homeRepository.findByAddressContainingIgnoreCaseAndHomeStatusTrue(searchQuery));
+            homes = homeSet.stream()
+                    .filter(home -> home.getLocation().equals(location))
+                    .collect(Collectors.toList());
         } else if (searchQuery != null) {
             Set<Home> homeSet = new HashSet<>();
             homeSet.addAll(homeRepository.findByHomeNameContainingIgnoreCaseAndHomeStatusTrue(searchQuery));
