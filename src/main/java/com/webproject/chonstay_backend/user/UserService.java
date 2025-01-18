@@ -72,12 +72,10 @@ public class UserService {
     }
 
     // 역할 변경 메서드
-    public String updateUserRole(Long userId, Role newRole) {
+    public void updateUserRole(Long userId, Role newRole) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User with ID " + userId + " not found")); // 사용자 확인
         user.setRole(newRole); // 역할 변경
         userRepository.save(user); // 저장
-
-        return
     }
 }
