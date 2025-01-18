@@ -56,4 +56,11 @@ public class UserController {
     public void DeleteUser(Long userId) {
         userService.deleteUserById(userId);
     }
+
+    // 역할 변경 엔드포인트
+    @PutMapping("/role")
+    public ResponseEntity<String> updateUserRole(Long userId, Role role) {
+        userService.updateUserRole(userId, role);
+        return ResponseEntity.ok("User role updated successfully.");
+    }
 }
